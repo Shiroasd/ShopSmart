@@ -1,5 +1,6 @@
 package com.shopsmart.productos_service.model;
 
+// Recordatorio: Enlace para get y para hacer un post http://localhost:8080/productos
 // Esta puede ser una manera de hacer los endpoints - Att: Samuel
 public class Producto {
     private Long id;
