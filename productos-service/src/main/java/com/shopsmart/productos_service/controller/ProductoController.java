@@ -1,33 +1,31 @@
 package com.shopsmart.productos_service.controller;
 
 import com.shopsmart.productos_service.model.Producto;
+import com.shopsmart.productos_service.repository.ProductoRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/productos") // Esta sera la ruta base
+@RequestMapping("/productos")
 public class ProductoController {
 
-    private List<Producto> productos = new ArrayList<>();
+    private final ProductoRepository productoRepository;
 
-    // Voy a crear productos de prueba
-    public ProductoController() {
-        productos.add(new Producto(1L, "Laptop Gamer", 1200.00));
-        productos.add(new Producto(2L, "Mouse Optico", 25.50));
+    // Inyección del repositorio vía constructor
+    public ProductoController(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
     }
 
-    // Aqui hago el endpoint GET que nos retornara la lista de productos
+    // Endpoint GET: lista todos los productos desde la BD
     @GetMapping
     public List<Producto> listarProductos() {
-        return productos;
+        return productoRepository.findAll();
     }
 
-    // Y aqui hago el otro endpoint POST que agregara un producto nuevo
+    // Endpoint POST: guarda un nuevo producto en la BD
     @PostMapping
     public Producto crearProducto(@RequestBody Producto nuevoProducto) {
-        productos.add(nuevoProducto);
-        return nuevoProducto;
+        return productoRepository.save(nuevoProducto);
     }
 }
